@@ -1,59 +1,61 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
-double max_in_array(double *arr, int size){
-	double max = arr[0];
-	for(int i = 1; i < size; i++){
-		if(max < arr[i]){
-			max = arr[i];
-		}
-	}
+int main()
+{
+	freopen("input.txt", "r", stdin);
 
-	return max;
-}
+	int T;
+	cin >> T;
+	for (int i = 0; i < T; i++)
+	{
+		int arr[101][101];
+		int sum_main_diagonal = 0;
+		int sum_sub_diagonal = 0;
+		int result = 0;
 
-int main() {
-	freopen("input.txt","r",stdin);
-
-	int T;cin >> T;
-	for(int i = 0; i < T; i++){
-		double arr[101][101];
-		double arr_row[101] = {0};
-		double arr_col[101] = {0};
-		double sum_main_diagonal = 0;
-		double sum_sub_diagonal = 0;
-
-		int N; cin >> N;
-		for(int j = 0; j < N; j++){
-			for(int k = 0; k < N; k++){
+		int N;
+		cin >> N;
+		for (int j = 0; j < N; j++)
+		{
+			for (int k = 0; k < N; k++)
+			{
 				cin >> arr[j][k];
 			}
 		}
-		
-		for(int j = 0; j < N; j++){
-			for(int k = 0; k < N; k++){
-				arr_row[j] += arr[j][k];
-				arr_col[j] += arr[k][j];
 
-				if(j == k){
+		for (int j = 0; j < N; j++)
+		{
+			int sum_row = 0;
+			int sum_col = 0;
+			for (int k = 0; k < N; k++)
+			{
+				sum_row += arr[j][k];
+				sum_col += arr[k][j];
+
+				if (j == k)
+				{
 					sum_main_diagonal += arr[j][k];
 				}
 
-				if((j+k) == (N-1)){
+				if ((j + k) == (N - 1))
+				{
 					sum_sub_diagonal += arr[j][k];
 				}
 			}
-		} 
+			if (sum_row > result)
+				result = sum_row;
+			if (sum_col > result)
+				result = sum_col;
+		}
 
-		double max_row = max_in_array(arr_row, N);
-		double max_col = max_in_array(arr_col, N);
-		double arr_sum[4] = {max_row, max_col, sum_main_diagonal, sum_sub_diagonal};
-		double max = max_in_array(arr_sum, 4);
+		if (sum_main_diagonal > result)
+			result = sum_main_diagonal;
+		if (sum_sub_diagonal > result)
+			result = sum_sub_diagonal;
 
-		cout << "#" << (i+1) << " " << max << endl;
+		cout << "#" << (i + 1) << " " << result << endl;
 	}
 
 	return 0;
