@@ -94,8 +94,6 @@ void kiemtra() {
 
 			if (check(x, y) && (a[x][y] == 0 || a[x][y] == -1)) {
 				a[x][y] = -1;
-				x = x + dxma[j];
-				y = y + dyma[j];
 			}
 		}
 	}
