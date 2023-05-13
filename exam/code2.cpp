@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
         int x1, y1, x2, y2;
         cin >> x1 >> y1 >> x2 >> y2;
 
-        if (x1 < x2 || (x1 == x2 && y1 < y2))
+        if (x1 < x2)
         {
             int tmp = a[x1][y1];
             for (int j = x1; j <= x2; j++)
@@ -54,18 +54,36 @@ int main(int argc, char const *argv[])
                     }
                     else
                     {
-                        a[j][k] = a[j][k + 1];
+                        if (k == n - 1)
+                        {
+                            a[j][k] = a[j + 1][0];
+                        }
+                        else
+                        {
+                            a[j][k] = a[j][k + 1];
+                        }
                     }
                 }
             }
             a[x2][y2] = tmp;
         }
 
-        if(x1 > x2 || (x1 == x2 && y1 > y2)){
+        if (x1 == x2 && y1 < y2)
+        {
+            int tmp = a[x1][y1];
+            for (int j = y1; j < y2; j++)
+            {
+                a[x1][j] = a[x1][j + 1];
+            }
+            a[x2][y2] = tmp;
+        }
+
+        if (x1 > x2)
+        {
             int tmp = a[x1][y1];
             for (int j = x1; j >= x2; j--)
             {
-                for (int k = n-1; k >= 0; k--)
+                for (int k = n - 1; k >= 0; k--)
                 {
                     if (j == x1)
                     {
@@ -73,7 +91,7 @@ int main(int argc, char const *argv[])
                         {
                             if (k == 0)
                             {
-                                a[j][k] = a[j - 1][n-1];
+                                a[j][k] = a[j - 1][n - 1];
                             }
                             else
                             {
@@ -90,9 +108,26 @@ int main(int argc, char const *argv[])
                     }
                     else
                     {
-                        a[j][k] = a[j][k - 1];
+                        if (k == 0)
+                        {
+                            a[j][k] = a[j - 1][n - 1];
+                        }
+                        else
+                        {
+                            a[j][k] = a[j][k - 1];
+                        }
                     }
                 }
+            }
+            a[x2][y2] = tmp;
+        }
+
+        if (x1 == x2 && y1 > y2)
+        {
+            int tmp = a[x1][y1];
+            for (int j = y1; j > y2; j--)
+            {
+                a[x1][j] = a[x1][j - 1];
             }
             a[x2][y2] = tmp;
         }
